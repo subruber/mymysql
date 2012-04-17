@@ -266,12 +266,8 @@ func (my *Conn) getResponse() (res *Result) {
 	if !ok {
 		panic(BAD_RESULT_ERROR)
 	}
-	if res.field_count != 0 {
-		// This query can return rows (this isn't OK result)
-		my.unreaded_reply = true
-	} else {
-		my.unreaded_reply = false
-	}
+	// Set to true iff this query can return rows (this isn't OK result)
+	my.unreaded_reply = (res.field_count != 0)
 	return
 }
 
